@@ -2,50 +2,12 @@
 <html>
 <head>
   <title>Tic Tac Toe POC</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-    }
-
-    #status {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    #board {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      grid-template-rows: repeat(3, 100px);
-      gap: 5px;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .cell {
-      width: 100px;
-      height: 100px;
-      font-size: 48px;
-      cursor: pointer;
-      background: white;
-      border: 2px solid black;
-    }
-
-    button {
-      font-size: 18px;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <h1>Tic Tac Toe</h1>
+
   <div id="status">Player X's turn</div>
 
   <div id="board">
@@ -60,100 +22,8 @@
     <button class="cell" onclick="makeMove(8)"></button>
   </div>
 
-  <button onclick="resetGame()">Reset Game</button>
+  <button id="reset-button" onclick="resetGame()">Reset Game</button>
 
-  <script>
-    let board = ["", "", "", "", "", "", "", "", ""];
-    let currentPlayer = "X";
-    let gameOver = false;
-
-    const winningLines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ];
-
-    function makeMove(position) {
-      if (gameOver === true) {
-        return;
-      }
-
-      if (board[position] !== "") {
-        return;
-      }
-
-      board[position] = currentPlayer;
-
-      renderBoard();
-
-      if (checkWinner(currentPlayer)) {
-        document.getElementById("status").textContent = "Player " + currentPlayer + " wins!";
-        gameOver = true;
-        return;
-      }
-
-      if (boardFull()) {
-        document.getElementById("status").textContent = "It's a draw!";
-        gameOver = true;
-        return;
-      }
-
-      if (currentPlayer === "X") {
-        currentPlayer = "O";
-      } else {
-        currentPlayer = "X";
-      }
-
-      document.getElementById("status").textContent = "Player " + currentPlayer + "'s turn";
-    }
-
-    function renderBoard() {
-      const cells = document.querySelectorAll(".cell");
-
-      for (let i = 0; i < cells.length; i++) {
-        cells[i].textContent = board[i];
-      }
-    }
-
-    function checkWinner(player) {
-      for (let i = 0; i < winningLines.length; i++) {
-        const line = winningLines[i];
-
-        const a = line[0];
-        const b = line[1];
-        const c = line[2];
-
-        if (board[a] === player && board[b] === player && board[c] === player) {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    function boardFull() {
-      for (let i = 0; i < board.length; i++) {
-        if (board[i] === "") {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    function resetGame() {
-      board = ["", "", "", "", "", "", "", "", ""];
-      currentPlayer = "X";
-      gameOver = false;
-
-      document.getElementById("status").textContent = "Player X's turn";
-      renderBoard();
-    }
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
